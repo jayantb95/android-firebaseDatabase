@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FirebaseDatabase</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_contact">Contact</string>
+    <string name="btn_submit">Add to Firebase Database</string>
+</resources>

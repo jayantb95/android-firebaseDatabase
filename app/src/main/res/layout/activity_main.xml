@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="jayantb95.firebasedatabase.MainActivity">
+
+    <EditText
+        android:id="@+id/edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edt_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_name"
+        android:hint="@string/hint_age"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edt_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_age"
+        android:hint="@string/hint_contact"
+        android:textSize="20sp" />
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/btn_submit" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_submit"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hint_name"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txt_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_name"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hint_age"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txt_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_age"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hint_contact"
+        android:textSize="20sp" />
+
+</RelativeLayout>
