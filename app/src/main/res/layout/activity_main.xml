@@ -34,34 +34,15 @@
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/edt_contact"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:text="@string/btn_submit" />
 
-    <TextView
-        android:id="@+id/txt_name"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_person"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_submit"
-        android:layout_marginTop="10dp"
-        android:hint="@string/hint_name"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/txt_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_name"
-        android:layout_marginTop="10dp"
-        android:hint="@string/hint_age"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/txt_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_age"
-        android:layout_marginTop="10dp"
-        android:hint="@string/hint_contact"
-        android:textSize="20sp" />
-
+        android:layout_marginTop="10dp" />
 </RelativeLayout>

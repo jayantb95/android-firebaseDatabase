@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -30,7 +31,9 @@ public class RecyclerPersonAdapter extends RecyclerView.Adapter<RecyclerPersonAd
 
     @Override
     public void onBindViewHolder(PersonHolder holder, int position) {
-
+        holder.txtPersonAge.setText(personList.get(position).getAge());
+        holder.txtPersonContact.setText(personList.get(position).getContact());
+        holder.txtPersonName.setText(personList.get(position).getName());
     }
 
     @Override
@@ -39,8 +42,16 @@ public class RecyclerPersonAdapter extends RecyclerView.Adapter<RecyclerPersonAd
     }
 
     public class PersonHolder extends RecyclerView.ViewHolder {
+
+        private TextView txtPersonAge;
+        private TextView txtPersonContact;
+        private TextView txtPersonName;
+
         public PersonHolder(View itemView) {
             super(itemView);
+            txtPersonAge = itemView.findViewById(R.id.txt_age_person);
+            txtPersonContact = itemView.findViewById(R.id.txt_contact_person);
+            txtPersonName = itemView.findViewById(R.id.txt_name_person);
         }
     }
 }
