@@ -1,10 +1,12 @@
 package jayantb95.firebasedatabase.activity;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import jayantb95.firebasedatabase.R;
 import jayantb95.firebasedatabase.adapter.RecyclerPersonAdapter;
@@ -39,12 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtContact;
     private EditText edtName;
 
-    private TextView txtAge;
-    private TextView txtContact;
-    private TextView txtName;
-
+    private RecyclerPersonAdapter mRecyclerPersonAdapter;
     private RecyclerView recyclerViewPerson;
     private List<PersonModel> personList = new ArrayList<>();
+
+    private String android_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        android_id = UUID.randomUUID().toString();
+        Log.d(TAG, android_id);
         firebaseDB = FirebaseDatabase.getInstance();
-        dbRef = firebaseDB.getReference("FirebaseDatabaseExample");
+        dbRef = firebaseDB.getReference("FirebaseDatabaseExample/" + android_id);
 
         btnSubmit = findViewById(R.id.btn_submit);
 
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptPushData();
+                attemptPostData();
             }
         });
 
@@ -94,20 +98,26 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
 
-    private void attemptPushData() {
+    private void attemptPostData() {
         PersonModel person = new PersonModel();
         String age = edtAge.getText().toString().trim();
         String contact = edtContact.getText().toString().trim();
         String name = edtName.getText().toString().trim();
 
-        if (age.isEmpty()) {
-            person.setAge("no age specified");
+        if (TextUtils.isEmpty(age)) {
+            Toast.makeText(MainActivity.this, "no age specified", Toast.LENGTH_SHORT)
+                    .show();
+            return;
         }
         if (contact.isEmpty()) {
-            person.setContact("no contact specified");
+            Toast.makeText(MainActivity.this, "no contact specified", Toast.LENGTH_SHORT)
+                    .show();
+            return;
         }
         if (name.isEmpty()) {
-            person.setName("no name specified");
+            Toast.makeText(MainActivity.this, "no name specified", Toast.LENGTH_SHORT)
+                    .show();
+            return;
         }
         person.setAge(age);
         person.setContact(contact);
@@ -129,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (personList.size() > 0) {
                     recyclerViewPerson.setHasFixedSize(false);
-                    recyclerViewPerson.setAdapter(new RecyclerPersonAdapter(personList));
+                    mRecyclerPersonAdapter = new RecyclerPersonAdapter(personList);
+                    recyclerViewPerson.setAdapter(mRecyclerPersonAdapter);
                     recyclerViewPerson.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                     recyclerViewPerson.setItemAnimator(new DefaultItemAnimator());
 
@@ -154,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot deleteSnapshot : dataSnapshot.getChildren()) {
                     deleteSnapshot.getRef().removeValue();
+                    attemptGetData();
                 }
             }
 
@@ -163,4 +175,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void attemptDeleteAll() {
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot deleteSnapshot : dataSnapshot.getChildren()) {
+                    deleteSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "ondestroy called");
+        attemptDeleteAll();
+        super.onDestroy();
+    }
+
 }
